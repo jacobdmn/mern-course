@@ -34,4 +34,9 @@ npm i react-router-dom@next
 - styled components
 - logo in figma
 - images in undraw.co
--
+
+#### Error Page
+
+#### Register Page Setup
+
+- mention about using showAlert directly in the register user

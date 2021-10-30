@@ -2,9 +2,14 @@ import { Link } from 'react-router-dom'
 import styled from 'styled-components'
 import main from '../assets/main-1.svg'
 import logo from '../assets/logo.svg'
+import { Navigate } from 'react-router-dom'
+import { useGlobalContext } from '../context/appContext'
+
 function Home() {
+  const { user } = useGlobalContext()
   return (
     <>
+      {user && <Navigate to='/dashboard' />}
       <Wrapper>
         <nav>
           <img src={logo} alt='jobs app' />
@@ -16,6 +21,7 @@ function Home() {
               <span> tracking </span>
               app
             </h1>
+
             <p>
               I'm baby viral enamel pin chartreuse cliche retro af selfies
               kinfolk photo booth plaid jianbing actually squid 3 wolf moon
@@ -23,7 +29,7 @@ function Home() {
               leggings.
             </p>
 
-            <Link to='/register' className='btn hero-btn'>
+            <Link to='/register' className='btn btn-hero'>
               Login / Register
             </Link>
           </div>
@@ -33,7 +39,6 @@ function Home() {
     </>
   )
 }
-
 const Wrapper = styled.div`
   .page {
     min-height: calc(100vh - 6rem);
@@ -54,6 +59,9 @@ const Wrapper = styled.div`
     span {
       color: var(--primary-500);
     }
+  }
+  p {
+    color: var(--grey-600);
   }
   .main-img {
     display: none;
