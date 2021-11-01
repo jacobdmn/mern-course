@@ -6,7 +6,8 @@ import {
   REGISTER_USER_ERROR,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
-} from './actions'
+  LOGOUT_USER,
+} from '../actions/userActions'
 
 const reducer = (state, action) => {
   if (action.type === DISPLAY_ALERT) {
@@ -56,6 +57,13 @@ const reducer = (state, action) => {
       showAlert: true,
       alertText: action.payload.msg,
       alertType: 'danger',
+    }
+  }
+  if (action.type === LOGOUT_USER) {
+    return {
+      ...state,
+      user: null,
+      token: null,
     }
   }
   throw new Error(`no such action : ${action}`)

@@ -7,8 +7,9 @@ import {
   REGISTER_USER_ERROR,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
-} from './actions'
-import reducer from './reducer'
+  LOGOUT_USER,
+} from './actions/userActions'
+import reducer from './reducers/userReducer'
 import axios from 'axios'
 
 const token = localStorage.getItem('token')
@@ -21,8 +22,8 @@ const initialState = {
   user: user ? JSON.parse(user) : null,
   token: token,
 }
-const AppContext = React.createContext()
-const AppProvider = ({ children }) => {
+const UserContext = React.createContext()
+const UserProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
 
   const displayAlert = ({
@@ -47,6 +48,7 @@ const AppProvider = ({ children }) => {
     localStorage.setItem('user', JSON.stringify(user))
     localStorage.setItem('token', token)
   }
+
   const registerUser = async (user) => {
     // mention about REGISTER_USER_BEGIN
     setLoading()
@@ -84,24 +86,29 @@ const AppProvider = ({ children }) => {
     }
     hideAlert()
   }
-
+  const logoutUser = () => {
+    localStorage.removeItem('token')
+    localStorage.removeItem('user')
+    dispatch({ type: LOGOUT_USER })
+  }
   return (
-    <AppContext.Provider
+    <UserContext.Provider
       value={{
         ...state,
 
         displayAlert,
         registerUser,
         loginUser,
+        logoutUser,
       }}
     >
       {children}
-    </AppContext.Provider>
+    </UserContext.Provider>
   )
 }
 // make sure use
-export const useGlobalContext = () => {
-  return useContext(AppContext)
+export const useUserContext = () => {
+  return useContext(UserContext)
 }
 
-export { AppProvider }
+export { UserProvider }

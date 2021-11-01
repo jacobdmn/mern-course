@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import main from '../assets/main-1.svg'
 import logo from '../assets/logo.svg'
 import { Navigate } from 'react-router-dom'
-import { useGlobalContext } from '../context/appContext'
+import { useUserContext } from '../context/userContext'
 
 function Home() {
-  const { user } = useGlobalContext()
+  const { user } = useUserContext()
   return (
     <>
       {user && <Navigate to='/dashboard' />}

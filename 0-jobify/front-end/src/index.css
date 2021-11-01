@@ -203,6 +203,10 @@ ul {
   box-shadow: var(--shadow-2);
   padding: 2rem 2.5rem;
   margin: 3rem auto;
+  transition: var(--transition);
+}
+.form:hover {
+  box-shadow: var(--shadow-4);
 }
 .form-label {
   display: block;
@@ -276,4 +280,8 @@ ul {
 }
 .full-page {
   min-height: 100vh;
+}
+.dashboard-page {
+  width: 90%;
+  margin: 0 auto;
 }

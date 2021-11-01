@@ -1,8 +1,8 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import FormRow from '../components/FormRow'
+import { FormRow } from '../components'
 import logo from '../assets/logo.svg'
-import { useGlobalContext } from '../context/appContext'
+import { useUserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 const initialState = {
   name: 'john',
@@ -20,7 +20,7 @@ function Register() {
     registerUser,
     loginUser,
     user,
-  } = useGlobalContext()
+  } = useUserContext()
   const navigate = useNavigate()
 
   const toggleMember = () => {
