@@ -55,8 +55,9 @@ html {
   --letterSpacing: 1px;
   --transition: 0.3s ease-in-out all;
   --max-width: 1120px;
-  --fixed-width: 600px;
+  --fixed-width: 500px;
   --fluid-width: 90vw;
+  --breakpoint-lg: 992px;
   /* box shadow*/
   --shadow-1: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
   --shadow-2: 0 4px 6px -1px rgba(0, 0, 0, 0.1),
@@ -151,7 +152,7 @@ ul {
   border-radius: var(--borderRadius);
   letter-spacing: var(--letterSpacing);
   padding: 0.375rem 0.75rem;
-  box-shadow: var(--shadow-1);
+  box-shadow: var(--shadow-2);
   transition: var(--transition);
   text-transform: capitalize;
   display: inline-block;
@@ -282,6 +283,12 @@ ul {
   min-height: 100vh;
 }
 .dashboard-page {
-  width: 90%;
+  width: 90vw;
   margin: 0 auto;
+  padding: 2rem 0;
+}
+@media (min-width: 992px) {
+  .dashboard-page {
+    width: 90%;
+  }
 }

@@ -1,9 +1,9 @@
 import styled from 'styled-components'
-const Stats = () => {
+const AllJobs = () => {
   return (
     <Wrapper className='dashboard-page'>
       <div className='content'>
-        <h3>stats</h3>
+        <h1>all jobs page</h1>
       </div>
     </Wrapper>
   )
@@ -15,4 +15,4 @@ const Wrapper = styled.section`
   }
 `
 
-export default Stats
+export default AllJobs

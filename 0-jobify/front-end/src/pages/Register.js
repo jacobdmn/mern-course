@@ -5,9 +5,9 @@ import logo from '../assets/logo.svg'
 import { useUserContext } from '../context/userContext'
 import { useNavigate } from 'react-router-dom'
 const initialState = {
-  name: 'john',
-  email: 'john@gmail.com',
-  password: 'secret',
+  name: '',
+  email: '',
+  password: '',
   isMember: true,
 }
 function Register() {
@@ -51,7 +51,7 @@ function Register() {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate('/dashboard')
+        navigate('/dashboard/stats')
       }, 2000)
     }
   }, [user, navigate])
@@ -69,7 +69,7 @@ function Register() {
             {/* name field */}
             {!values.isMember && (
               <FormRow
-                type='name'
+                type='text'
                 name='name'
                 value={values.name}
                 handleChange={handleChange}

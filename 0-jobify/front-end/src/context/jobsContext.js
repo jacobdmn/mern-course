@@ -12,12 +12,9 @@ const JobsProvider = ({ children }) => {
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR })
   }
-  const closeSidebar = () => {
-    dispatch({ type: CLOSE_SIDEBAR })
-  }
 
   return (
-    <JobsContext.Provider value={{ ...state, toggleSidebar, closeSidebar }}>
+    <JobsContext.Provider value={{ ...state, toggleSidebar }}>
       {children}
     </JobsContext.Provider>
   )

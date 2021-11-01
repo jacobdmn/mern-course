@@ -1,4 +1,5 @@
 import Navbar from './Navbar'
 import FormRow from './FormRow'
 import SmallSidebar from './SmallSidebar'
-export { FormRow, Navbar, SmallSidebar }
+import BigSidebar from './BigSidebar'
+export { FormRow, Navbar, BigSidebar, SmallSidebar }

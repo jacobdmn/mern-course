@@ -9,7 +9,7 @@ function Home() {
   const { user } = useUserContext()
   return (
     <>
-      {user && <Navigate to='/dashboard' />}
+      {user && <Navigate to='/dashboard/stats' />}
       <Wrapper>
         <nav>
           <img src={logo} alt='jobs app' />
@@ -66,6 +66,7 @@ const Wrapper = styled.div`
   .main-img {
     display: none;
   }
+
   @media (min-width: 992px) {
     .container {
       grid-template-columns: 1fr 1fr;

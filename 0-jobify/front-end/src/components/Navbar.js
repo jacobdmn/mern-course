@@ -15,7 +15,10 @@ const Navbar = () => {
         <button className='toggle-btn' onClick={() => toggleSidebar()}>
           <FaAlignLeft />
         </button>
-        <img src={logo} alt='jobify' />
+        <div>
+          <img src={logo} alt='jobify' className='logo' />
+          <h3 className='logo-text'>dashboard</h3>
+        </div>
         {user && (
           <div className='btn-container'>
             <button className='btn' onClick={() => setShowLogout(!showLogout)}>
@@ -42,7 +45,7 @@ const Wrapper = styled.nav`
   justify-content: center;
   .nav-center {
     display: flex;
-    width: 90%;
+    width: 90vw;
     align-items: center;
     justify-content: space-between;
   }
@@ -63,6 +66,7 @@ const Wrapper = styled.nav`
     justify-content: center;
     gap: 0 0.5rem;
     position: relative;
+    box-shadow: var(--shadow-2);
   }
 
   .dropdown {
@@ -71,11 +75,11 @@ const Wrapper = styled.nav`
     left: 0;
     width: 100%;
     background: var(--primary-100);
+    box-shadow: var(--shadow-2);
     padding: 0.5rem;
     text-align: center;
     visibility: hidden;
     border-radius: var(--borderRadius);
-    box-shadow: var(--shadow-2);
   }
   .show-dropdown {
     visibility: visible;
@@ -87,6 +91,24 @@ const Wrapper = styled.nav`
     letter-spacing: var(--letterSpacing);
     text-transform: capitalize;
     cursor: pointer;
+  }
+  .logo-text {
+    display: none;
+    margin: 0;
+  }
+  @media (min-width: 992px) {
+    position: sticky;
+    top: 0;
+
+    .nav-center {
+      width: 90%;
+    }
+    .logo {
+      display: none;
+    }
+    .logo-text {
+      display: block;
+    }
   }
 `
 

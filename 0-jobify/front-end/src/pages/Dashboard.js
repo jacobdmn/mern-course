@@ -1,24 +1,28 @@
 import { useUserContext } from '../context/userContext'
-import { useJobsContext } from '../context/jobsContext'
 import { Navigate } from 'react-router-dom'
-import { Navbar, SmallSidebar } from '../components'
+import { Navbar, SmallSidebar, BigSidebar } from '../components'
 import { Routes, Route } from 'react-router-dom'
 import styled from 'styled-components'
 import Stats from './Stats'
+import AllJobs from './AllJobs'
+import AddJob from './AddJob'
+import Profile from './Profile'
 const Dashboard = () => {
   const { user } = useUserContext()
-  const { showSidebar } = useJobsContext()
   return (
     <>
       {!user && <Navigate to='/' />}
       <Wrapper>
         <div className='dashboard'>
-          {showSidebar && <SmallSidebar />}
-          <div className='big-sidebar'>this is big screen sidebar</div>
+          <SmallSidebar />
+          <BigSidebar />
           <div>
             <Navbar />
             <Routes>
-              <Route path='/' element={<Stats />}></Route>
+              <Route path='stats' element={<Stats />}></Route>
+              <Route path='all-jobs' element={<AllJobs />}></Route>
+              <Route path='add-job' element={<AddJob />}></Route>
+              <Route path='profile' element={<Profile />}></Route>
             </Routes>
           </div>
         </div>
@@ -31,18 +35,8 @@ const Wrapper = styled.section`
     display: grid;
     grid-template-columns: 1fr;
   }
-  .big-sidebar {
-    display: none;
-  }
 
-  @media (min-width: 768px) {
-    .big-sidebar {
-      display: block;
-      background: red;
-      min-height: 100vh;
-      width: 200px;
-      transition: var(--transition);
-    }
+  @media (min-width: 992px) {
     .dashboard {
       grid-template-columns: auto 1fr;
     }
