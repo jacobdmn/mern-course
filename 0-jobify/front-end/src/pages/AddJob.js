@@ -1,69 +1,89 @@
-import { useState } from 'react'
 import styled from 'styled-components'
-import { FormRow } from '../components'
-
-const initialState = {
-  position: 'front-end developer',
-  company: 'google',
-  location: 'los angeles',
-  type: 'part time',
-}
+import { FormRow, FormRowSelect } from '../components'
+import { useAppContext } from '../context/appContext'
 
 const AddJob = () => {
-  const [job, setJob] = useState(initialState)
+  const {
+    showAlert,
+    displayAlert,
+    alertType,
+    alertText,
+    position,
+    company,
+    location,
+    jobType,
+    jobTypeOptions,
+    status,
+    statusOptions,
+    handleChange,
+    clearValues,
+  } = useAppContext()
 
-  const handleChange = (e) => {
-    setJob({ ...job, [e.target.name]: e.target.value })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+
+    if (!position || !company || !location) {
+      displayAlert()
+    }
   }
   return (
     <Wrapper className='dashboard-page'>
       <div className='content'>
-        <div className='form'>
+        <form className='form' onSubmit={handleSubmit}>
           <h3>add job </h3>
+          {showAlert && (
+            <div className={`alert alert-${alertType}`}>{alertText}</div>
+          )}
+
           {/* position */}
           <div className='form-center'>
             <FormRow
               type='text'
               name='position'
-              value={job.position}
+              value={position}
               handleChange={handleChange}
             />
             {/* company */}
             <FormRow
               type='text'
               name='company'
-              value={job.company}
+              value={company}
               handleChange={handleChange}
             />
             {/* location */}
             <FormRow
               type='text'
               name='location'
-              value={job.location}
+              value={location}
               handleChange={handleChange}
             />
-            {/* type */}
-            <div className='form-row'>
-              <label htmlFor='type' className='form-label'>
-                type
-              </label>
-
-              <select
-                name='type'
-                value={job.type}
-                onChange={handleChange}
-                className='type'
+            {/* job type */}
+            <FormRowSelect
+              name='status'
+              value={status}
+              handleChange={handleChange}
+              list={statusOptions}
+            />
+            {/* job status */}
+            <FormRowSelect
+              name='jobType'
+              value={jobType}
+              handleChange={handleChange}
+              list={jobTypeOptions}
+            />
+            <div className='btn-container'>
+              <button
+                className='btn btn-block clear-btn'
+                onClick={() => clearValues()}
               >
-                <option value='part-time'>part time</option>
-                <option value='full time'>full time</option>
-                <option value='freelance'>freelance </option>
-                <option value='remote'>remote </option>
-              </select>
+                clear
+              </button>
+              <button className='btn btn-block submit-btn' type='submit'>
+                submit
+              </button>
             </div>
-            <button className='btn btn-block submit-btn'>submit</button>
-            <button className='btn btn-block clear-btn'>clear</button>
           </div>
-        </div>
+        </form>
       </div>
     </Wrapper>
   )
@@ -85,18 +105,42 @@ const Wrapper = styled.section`
     max-width: 100%;
     width: 100%;
   }
+  .form-row {
+    margin-bottom: 0;
+  }
+  .form-center {
+    display: grid;
+    row-gap: 1rem;
+  }
+  .btn-container {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    column-gap: 1rem;
+    align-self: flex-end;
+    margin-top: 0.5rem;
+    button {
+      height: 35px;
+    }
+  }
   .clear-btn {
-    margin-top: 1rem;
+    background: var(--grey-500);
+  }
+  .clear-btn:hover {
+    background: var(--black);
   }
   @media (min-width: 992px) {
     .form-center {
-      display: grid;
       grid-template-columns: 1fr 1fr;
-      column-gap: 2rem;
+      align-items: center;
+      column-gap: 1rem;
     }
-    .clear-btn,
-    .submit-btn {
-      margin-top: 0.5rem;
+    .btn-container {
+      margin-top: 0;
+    }
+  }
+  @media (min-width: 1120px) {
+    .form-center {
+      grid-template-columns: 1fr 1fr 1fr;
     }
   }
 `

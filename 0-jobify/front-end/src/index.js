@@ -3,16 +3,14 @@ import ReactDOM from 'react-dom'
 import 'normalize.css'
 import './index.css'
 import App from './App'
-import { UserProvider } from './context/userContext'
-import { JobsProvider } from './context/jobsContext'
+
+import { AppProvider } from './context/appContext'
 
 ReactDOM.render(
   <React.StrictMode>
-    <UserProvider>
-      <JobsProvider>
-        <App />
-      </JobsProvider>
-    </UserProvider>
+    <AppProvider>
+      <App />
+    </AppProvider>
   </React.StrictMode>,
   document.getElementById('root')
 )

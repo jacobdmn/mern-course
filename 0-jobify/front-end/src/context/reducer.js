@@ -1,33 +1,47 @@
 import {
   DISPLAY_ALERT,
-  HIDE_ALERT,
-  SET_LOADING,
+  CLEAR_ALERT,
+  REGISTER_USER_BEGIN,
   REGISTER_USER_SUCCESS,
   REGISTER_USER_ERROR,
+  LOGIN_USER_BEGIN,
   LOGIN_USER_SUCCESS,
   LOGIN_USER_ERROR,
   LOGOUT_USER,
-} from '../actions/userActions'
+  TOGGLE_SIDEBAR,
+  HANDLE_CHANGE,
+  CLEAR_VALUES,
+} from './actions'
 
 const reducer = (state, action) => {
   if (action.type === DISPLAY_ALERT) {
-    return { ...state, ...action.payload }
+    return {
+      ...state,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: 'Please provide all values!',
+    }
   }
-  if (action.type === HIDE_ALERT) {
-    return { ...state, ...action.payload }
+  if (action.type === CLEAR_ALERT) {
+    return {
+      ...state,
+      showAlert: false,
+      alertType: '',
+      alertText: '',
+    }
   }
-  if (action.type === SET_LOADING) {
-    return { ...state, isLoading: true, showAlert: false }
+  if (action.type === REGISTER_USER_BEGIN) {
+    return { ...state, isLoading: true }
   }
   if (action.type === REGISTER_USER_SUCCESS) {
     return {
       ...state,
-      isLoading: false,
       user: action.payload.user,
       token: action.payload.token,
+      isLoading: false,
       showAlert: true,
-      alertText: 'Success! User Created',
       alertType: 'success',
+      alertText: 'User Created!',
     }
   }
   if (action.type === REGISTER_USER_ERROR) {
@@ -35,8 +49,14 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       showAlert: true,
-      alertText: action.payload.msg,
       alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+  if (action.type === LOGIN_USER_BEGIN) {
+    return {
+      ...state,
+      isLoading: true,
     }
   }
   if (action.type === LOGIN_USER_SUCCESS) {
@@ -46,8 +66,8 @@ const reducer = (state, action) => {
       user: action.payload.user,
       token: action.payload.token,
       showAlert: true,
-      alertText: 'Login Successful!',
       alertType: 'success',
+      alertText: 'Login Successful!',
     }
   }
   if (action.type === LOGIN_USER_ERROR) {
@@ -55,8 +75,8 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       showAlert: true,
-      alertText: action.payload.msg,
       alertType: 'danger',
+      alertText: action.payload.msg,
     }
   }
   if (action.type === LOGOUT_USER) {
@@ -64,7 +84,11 @@ const reducer = (state, action) => {
       ...state,
       user: null,
       token: null,
+      showAlert: false,
     }
+  }
+  if (action.type === TOGGLE_SIDEBAR) {
+    return { ...state, showSidebar: !state.showSidebar }
   }
   throw new Error(`no such action : ${action}`)
 }

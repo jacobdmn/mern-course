@@ -1,11 +1,11 @@
 import styled from 'styled-components'
-import { useJobsContext } from '../context/jobsContext'
+import { useAppContext } from '../context/appContext'
 import logo from '../assets/logo.svg'
 import { NavLink } from 'react-router-dom'
 import links from '../utils/links'
 
 const BigSidebar = () => {
-  const { showSidebar } = useJobsContext()
+  const { showSidebar } = useAppContext()
   return (
     <Wrapper>
       <div

@@ -1,11 +1,11 @@
 import styled from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
 import logo from '../assets/logo.svg'
-import { useJobsContext } from '../context/jobsContext'
+import { useAppContext } from '../context/appContext'
 import links from '../utils/links'
 import { NavLink } from 'react-router-dom'
 export const SmallSidebar = () => {
-  const { showSidebar, toggleSidebar } = useJobsContext()
+  const { showSidebar, toggleSidebar } = useAppContext()
   return (
     <Wrapper>
       <div

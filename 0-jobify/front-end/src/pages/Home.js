@@ -3,10 +3,10 @@ import styled from 'styled-components'
 import main from '../assets/main-1.svg'
 import logo from '../assets/logo.svg'
 import { Navigate } from 'react-router-dom'
-import { useUserContext } from '../context/userContext'
+import { useAppContext } from '../context/appContext'
 
 function Home() {
-  const { user } = useUserContext()
+  const { user } = useAppContext()
   return (
     <>
       {user && <Navigate to='/dashboard/stats' />}

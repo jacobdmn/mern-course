@@ -2,7 +2,8 @@ import { useState, useEffect } from 'react'
 import styled from 'styled-components'
 import { FormRow } from '../components'
 import logo from '../assets/logo.svg'
-import { useUserContext } from '../context/userContext'
+import { useAppContext } from '../context/appContext'
+
 import { useNavigate } from 'react-router-dom'
 const initialState = {
   name: '',
@@ -12,15 +13,17 @@ const initialState = {
 }
 function Register() {
   const [values, setValues] = useState(initialState)
+
   const {
     isLoading,
     showAlert,
     alertText,
     alertType,
+    displayAlert,
     registerUser,
     loginUser,
     user,
-  } = useUserContext()
+  } = useAppContext()
   const navigate = useNavigate()
 
   const toggleMember = () => {
@@ -36,7 +39,7 @@ function Register() {
     if (!email || !password || (!isMember && !name)) {
       // remember to pass as an object
       // showAlert({ alertText: 'something went wrong', alertType: 'success' })
-      showAlert({})
+      displayAlert()
       return
     }
     // create user

@@ -1,4 +1,4 @@
-import { useUserContext } from '../context/userContext'
+import { useAppContext } from '../context/appContext'
 import { Navigate } from 'react-router-dom'
 import { Navbar, SmallSidebar, BigSidebar } from '../components'
 import { Routes, Route } from 'react-router-dom'
@@ -8,7 +8,7 @@ import AllJobs from './AllJobs'
 import AddJob from './AddJob'
 import Profile from './Profile'
 const Dashboard = () => {
-  const { user } = useUserContext()
+  const { user } = useAppContext()
   return (
     <>
       {!user && <Navigate to='/' />}

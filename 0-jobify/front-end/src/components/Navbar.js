@@ -1,12 +1,10 @@
 import { useState } from 'react'
-import { useUserContext } from '../context/userContext'
-import { useJobsContext } from '../context/jobsContext'
+import { useAppContext } from '../context/appContext'
 import styled from 'styled-components'
 import logo from '../assets/logo.svg'
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
 const Navbar = () => {
-  const { user, logoutUser } = useUserContext()
-  const { toggleSidebar } = useJobsContext()
+  const { user, logoutUser, toggleSidebar } = useAppContext()
   const [showLogout, setShowLogout] = useState(false)
 
   return (
