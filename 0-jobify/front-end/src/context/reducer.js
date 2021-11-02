@@ -11,6 +11,9 @@ import {
   TOGGLE_SIDEBAR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './actions'
 
 const reducer = (state, action) => {
@@ -89,6 +92,40 @@ const reducer = (state, action) => {
   }
   if (action.type === TOGGLE_SIDEBAR) {
     return { ...state, showSidebar: !state.showSidebar }
+  }
+  if (action.type === HANDLE_CHANGE) {
+    return { ...state, [action.payload.name]: action.payload.value }
+  }
+  if (action.type === CLEAR_VALUES) {
+    const initialState = {
+      position: '',
+      company: '',
+      location: 'my city',
+      jobType: 'full-time',
+      status: 'pending',
+    }
+    return { ...state, ...initialState }
+  }
+  if (action.type === CREATE_JOB_BEGIN) {
+    return { ...state, isLoading: true }
+  }
+  if (action.type === CREATE_JOB_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'New Job Created!',
+    }
+  }
+  if (action.type === CREATE_JOB_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: 'there was an error',
+    }
   }
   throw new Error(`no such action : ${action}`)
 }

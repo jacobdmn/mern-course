@@ -12,6 +12,9 @@ import {
   TOGGLE_SIDEBAR,
   HANDLE_CHANGE,
   CLEAR_VALUES,
+  CREATE_JOB_BEGIN,
+  CREATE_JOB_SUCCESS,
+  CREATE_JOB_ERROR,
 } from './actions'
 import reducer from './reducer'
 
@@ -30,7 +33,7 @@ const initialState = {
   showSidebar: false,
   position: '',
   company: '',
-  location: '',
+  location: 'my city',
   jobType: 'full-time',
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   status: 'pending',
@@ -109,6 +112,7 @@ const AppProvider = ({ children }) => {
   const toggleSidebar = () => {
     dispatch({ type: TOGGLE_SIDEBAR })
   }
+
   const handleChange = (e) => {
     dispatch({
       type: HANDLE_CHANGE,
@@ -118,6 +122,41 @@ const AppProvider = ({ children }) => {
   const clearValues = () => {
     dispatch({ type: CLEAR_VALUES })
   }
+
+  const createJob = async () => {
+    dispatch({ type: CREATE_JOB_BEGIN })
+    try {
+      const { position, company, location, jobType, status, token } = state
+
+      await axios.post(
+        '/jobs',
+        { company, position, location, jobType, status },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        },
+        user
+      )
+      dispatch({
+        type: CREATE_JOB_SUCCESS,
+      })
+      dispatch({ type: CLEAR_VALUES })
+    } catch (error) {
+      console.log(error.response)
+      if (error.response.status === 401) {
+        // need to remove all values
+        logoutUser()
+        return
+      }
+      dispatch({
+        type: CREATE_JOB_ERROR,
+      })
+      // console.log(error.response)
+    }
+    clearAlert()
+  }
+
   return (
     <AppContext.Provider
       value={{
@@ -129,6 +168,7 @@ const AppProvider = ({ children }) => {
         toggleSidebar,
         handleChange,
         clearValues,
+        createJob,
       }}
     >
       {children}

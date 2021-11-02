@@ -17,19 +17,21 @@ const AddJob = () => {
     statusOptions,
     handleChange,
     clearValues,
+    createJob,
   } = useAppContext()
 
   const handleSubmit = (e) => {
     e.preventDefault()
-
-    if (!position || !company || !location) {
+    if (!position || !company) {
       displayAlert()
+      return
     }
+    createJob()
   }
   return (
     <Wrapper className='dashboard-page'>
       <div className='content'>
-        <form className='form' onSubmit={handleSubmit}>
+        <form className='form'>
           <h3>add job </h3>
           {showAlert && (
             <div className={`alert alert-${alertType}`}>{alertText}</div>
@@ -74,11 +76,18 @@ const AddJob = () => {
             <div className='btn-container'>
               <button
                 className='btn btn-block clear-btn'
-                onClick={() => clearValues()}
+                onClick={(e) => {
+                  e.preventDefault()
+                  clearValues()
+                }}
               >
                 clear
               </button>
-              <button className='btn btn-block submit-btn' type='submit'>
+              <button
+                className='btn btn-block submit-btn'
+                type='submit'
+                onClick={handleSubmit}
+              >
                 submit
               </button>
             </div>
