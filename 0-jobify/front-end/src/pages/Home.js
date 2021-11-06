@@ -1,10 +1,9 @@
 import { Link } from 'react-router-dom'
 import styled from 'styled-components'
-import main from '../assets/main-1.svg'
-import logo from '../assets/logo.svg'
+import main from '../assets/images/main-1.svg'
 import { Navigate } from 'react-router-dom'
 import { useAppContext } from '../context/appContext'
-
+import Logo from '../components/Logo'
 function Home() {
   const { user } = useAppContext()
   return (
@@ -12,7 +11,7 @@ function Home() {
       {user && <Navigate to='/dashboard/stats' />}
       <Wrapper>
         <nav>
-          <img src={logo} alt='jobs app' />
+          <Logo />
         </nav>
         <div className='container page'>
           <div className='info'>
@@ -41,7 +40,7 @@ function Home() {
 }
 const Wrapper = styled.div`
   .page {
-    min-height: calc(100vh - 6rem);
+    min-height: calc(100vh - var(--nav-height));
     display: grid;
     align-items: center;
     margin-top: -3rem;
@@ -50,7 +49,7 @@ const Wrapper = styled.div`
     width: var(--fluid-width);
     max-width: var(--max-width);
     margin: 0 auto;
-    height: 6rem;
+    height: var(--nav-height);
     display: flex;
     align-items: center;
   }

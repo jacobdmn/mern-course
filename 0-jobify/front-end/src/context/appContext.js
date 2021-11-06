@@ -15,6 +15,13 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
+  AUTH_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
+  SHOW_STATS_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from './actions'
 import reducer from './reducer'
 
@@ -38,10 +45,37 @@ const initialState = {
   jobTypeOptions: ['full-time', 'part-time', 'remote', 'internship'],
   status: 'pending',
   statusOptions: ['pending', 'interview', 'declined'],
+  stats: {},
 }
 const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState)
+
+  const authFetch = axios.create()
+
+  // response interceptor
+  authFetch.interceptors.request.use(
+    (config) => {
+      config.headers.common['Authorization'] = `Bearer ${state.token}`
+      return config
+    },
+    (error) => {
+      return Promise.reject(error)
+    }
+  )
+  // response interceptor
+  authFetch.interceptors.response.use(
+    (response) => {
+      return response
+    },
+    (error) => {
+      if (error.response.status === 401) {
+        dispatch({ type: AUTH_ERROR })
+        removeUserFromLocalStorage()
+      }
+      return Promise.reject(error)
+    }
+  )
 
   const displayAlert = () => {
     dispatch({
@@ -128,31 +162,61 @@ const AppProvider = ({ children }) => {
     try {
       const { position, company, location, jobType, status, token } = state
 
-      await axios.post(
-        '/jobs',
-        { company, position, location, jobType, status },
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-        user
-      )
+      await authFetch.post('/jobs', {
+        company,
+        position,
+        location,
+        jobType,
+        status,
+      })
       dispatch({
         type: CREATE_JOB_SUCCESS,
       })
       dispatch({ type: CLEAR_VALUES })
     } catch (error) {
-      console.log(error.response)
-      if (error.response.status === 401) {
-        // need to remove all values
-        logoutUser()
-        return
-      }
+      if (error.response.status === 401) return
       dispatch({
         type: CREATE_JOB_ERROR,
+        payload: { msg: error.response.data.msg },
       })
-      // console.log(error.response)
+    }
+    clearAlert()
+  }
+
+  const showStats = async () => {
+    dispatch({ type: SHOW_STATS_BEGIN })
+    try {
+      const { data } = await authFetch('/jobs/stats')
+      dispatch({
+        type: SHOW_STATS_SUCCESS,
+        payload: { stats: data.defaultStats },
+      })
+    } catch (error) {
+      dispatch({
+        type: SHOW_STATS_ERROR,
+        payload: { msg: error.response.data.msg },
+      })
+    }
+  }
+
+  const updateUser = async ({ name, email }) => {
+    dispatch({ type: UPDATE_USER_BEGIN })
+    try {
+      const { data } = await authFetch.patch('/auth/updateUser', {
+        name,
+        email,
+      })
+      dispatch({
+        type: UPDATE_USER_SUCCESS,
+        payload: { user: data.user, token: data.token },
+      })
+
+      addUserToLocalStorage({ user: data.user, token: data.token })
+    } catch (error) {
+      dispatch({
+        type: UPDATE_USER_ERROR,
+        payload: { msg: error.response.data.msg },
+      })
     }
     clearAlert()
   }
@@ -169,6 +233,8 @@ const AppProvider = ({ children }) => {
         handleChange,
         clearValues,
         createJob,
+        showStats,
+        updateUser,
       }}
     >
       {children}

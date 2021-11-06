@@ -14,6 +14,13 @@ import {
   CREATE_JOB_BEGIN,
   CREATE_JOB_SUCCESS,
   CREATE_JOB_ERROR,
+  AUTH_ERROR,
+  SHOW_STATS_BEGIN,
+  SHOW_STATS_SUCCESS,
+  SHOW_STATS_ERROR,
+  UPDATE_USER_BEGIN,
+  UPDATE_USER_SUCCESS,
+  UPDATE_USER_ERROR,
 } from './actions'
 
 const reducer = (state, action) => {
@@ -44,7 +51,7 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: 'success',
-      alertText: 'User Created!',
+      alertText: 'User Created! Redirecting...',
     }
   }
   if (action.type === REGISTER_USER_ERROR) {
@@ -70,7 +77,7 @@ const reducer = (state, action) => {
       token: action.payload.token,
       showAlert: true,
       alertType: 'success',
-      alertText: 'Login Successful!',
+      alertText: 'Login Successful! Redirecting...',
     }
   }
   if (action.type === LOGIN_USER_ERROR) {
@@ -88,6 +95,8 @@ const reducer = (state, action) => {
       user: null,
       token: null,
       showAlert: false,
+      alertText: '',
+      alertType: '',
     }
   }
   if (action.type === TOGGLE_SIDEBAR) {
@@ -124,9 +133,70 @@ const reducer = (state, action) => {
       isLoading: false,
       showAlert: true,
       alertType: 'danger',
-      alertText: 'there was an error',
+      alertText: action.payload.msg,
     }
   }
+  if (action.type === AUTH_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: false,
+      alertType: '',
+      alertText: '',
+      position: '',
+      company: '',
+      location: 'my city',
+      jobType: 'full-time',
+      status: 'pending',
+      user: null,
+      token: null,
+      stats: [],
+    }
+  }
+  if (action.type === SHOW_STATS_BEGIN) {
+    return { ...state, isLoading: true }
+  }
+  if (action.type === SHOW_STATS_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      stats: action.payload.stats,
+    }
+  }
+  if (action.type === SHOW_STATS_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertText: action.payload.msg,
+      alertType: 'danger',
+    }
+  }
+  if (action.type === UPDATE_USER_BEGIN) {
+    return { ...state, isLoading: true }
+  }
+
+  if (action.type === UPDATE_USER_SUCCESS) {
+    return {
+      ...state,
+      isLoading: false,
+      user: action.payload.user,
+      token: action.payload.token,
+      showAlert: true,
+      alertType: 'success',
+      alertText: 'User Profile Updated!',
+    }
+  }
+  if (action.type === UPDATE_USER_ERROR) {
+    return {
+      ...state,
+      isLoading: false,
+      showAlert: true,
+      alertType: 'danger',
+      alertText: action.payload.msg,
+    }
+  }
+
   throw new Error(`no such action : ${action}`)
 }
 

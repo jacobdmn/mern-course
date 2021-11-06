@@ -1,9 +1,9 @@
 import styled from 'styled-components'
 import { FaTimes } from 'react-icons/fa'
-import logo from '../assets/logo.svg'
 import { useAppContext } from '../context/appContext'
 import links from '../utils/links'
 import { NavLink } from 'react-router-dom'
+import Logo from './Logo'
 export const SmallSidebar = () => {
   const { showSidebar, toggleSidebar } = useAppContext()
   return (
@@ -18,7 +18,7 @@ export const SmallSidebar = () => {
             <FaTimes />
           </button>
           <header>
-            <img src={logo} alt='jobify' className='logo' />
+            <Logo />
           </header>
           <div className='nav-links'>
             {links.map((link) => {

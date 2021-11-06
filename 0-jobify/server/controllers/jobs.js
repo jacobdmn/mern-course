@@ -1,7 +1,7 @@
 const Job = require('../models/Job')
 const { StatusCodes } = require('http-status-codes')
 const { BadRequestError, NotFoundError } = require('../errors')
-
+const mongoose = require('mongoose')
 const getAllJobs = async (req, res) => {
   const jobs = await Job.find({ createdBy: req.user.userId }).sort('createdAt')
   res.status(StatusCodes.OK).json({ jobs, count: jobs.length })
@@ -23,7 +23,6 @@ const getJob = async (req, res) => {
 }
 
 const createJob = async (req, res) => {
-  console.log(req.body)
   req.body.createdBy = req.user.userId
   const job = await Job.create(req.body)
   res.status(StatusCodes.CREATED).json({ job })
@@ -65,6 +64,34 @@ const deleteJob = async (req, res) => {
   }
   res.status(StatusCodes.OK).send()
 }
+const showStats = async (req, res) => {
+  let stats = await Job.aggregate([
+    { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+    { $group: { _id: '$status', count: { $sum: 1 } } },
+  ])
+  stats = stats.reduce((acc, curr) => {
+    const { _id: title, count } = curr
+    acc[title] = count
+    return acc
+  }, {})
+
+  const defaultStats = {
+    pending: stats.pending || 0,
+    interview: stats.interview || 0,
+    declined: stats.declined || 0,
+  }
+
+  // setup default
+
+  // let testing = await Job.aggregate([
+  //   { $match: { createdBy: mongoose.Types.ObjectId(req.user.userId) } },
+  //   { $group: { _id: { $week: '$createdAt' }, count: { $sum: 1 } } },
+  //   { $sort: { _id: -1 } },
+  //   { $limit: 6 },
+  // ])
+
+  res.status(StatusCodes.OK).json({ defaultStats })
+}
 
 module.exports = {
   createJob,
@@ -72,4 +99,5 @@ module.exports = {
   getAllJobs,
   updateJob,
   getJob,
+  showStats,
 }

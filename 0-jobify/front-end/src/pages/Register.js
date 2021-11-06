@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { FormRow } from '../components'
-import logo from '../assets/logo.svg'
+import { FormRow, Alert, Logo } from '../components'
 import { useAppContext } from '../context/appContext'
 
 import { useNavigate } from 'react-router-dom'
@@ -14,16 +13,8 @@ const initialState = {
 function Register() {
   const [values, setValues] = useState(initialState)
 
-  const {
-    isLoading,
-    showAlert,
-    alertText,
-    alertType,
-    displayAlert,
-    registerUser,
-    loginUser,
-    user,
-  } = useAppContext()
+  const { isLoading, showAlert, displayAlert, registerUser, loginUser, user } =
+    useAppContext()
   const navigate = useNavigate()
 
   const toggleMember = () => {
@@ -55,7 +46,7 @@ function Register() {
     if (user) {
       setTimeout(() => {
         navigate('/dashboard/stats')
-      }, 2000)
+      }, 3000)
     }
   }, [user, navigate])
   return (
@@ -63,12 +54,10 @@ function Register() {
       <Wrapper className='page full-page'>
         <div className='container'>
           <form className='form' onSubmit={onSubmit}>
-            <img src={logo} alt='jobify' className='logo' />
+            <Logo />
             <h3>{values.isMember ? 'Login' : 'Register'}</h3>
             {/* alert */}
-            {showAlert && (
-              <div className={`alert alert-${alertType}`}>{alertText}</div>
-            )}
+            {showAlert && <Alert />}
             {/* name field */}
             {!values.isMember && (
               <FormRow

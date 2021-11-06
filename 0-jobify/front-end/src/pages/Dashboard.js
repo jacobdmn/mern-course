@@ -18,12 +18,14 @@ const Dashboard = () => {
           <BigSidebar />
           <div>
             <Navbar />
-            <Routes>
-              <Route path='stats' element={<Stats />}></Route>
-              <Route path='all-jobs' element={<AllJobs />}></Route>
-              <Route path='add-job' element={<AddJob />}></Route>
-              <Route path='profile' element={<Profile />}></Route>
-            </Routes>
+            <div className='dashboard-page'>
+              <Routes>
+                <Route path='stats' element={<Stats />}></Route>
+                <Route path='all-jobs' element={<AllJobs />}></Route>
+                <Route path='add-job' element={<AddJob />}></Route>
+                <Route path='profile' element={<Profile />}></Route>
+              </Routes>
+            </div>
           </div>
         </div>
       </Wrapper>

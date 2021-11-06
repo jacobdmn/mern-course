@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { useAppContext } from '../context/appContext'
 import styled from 'styled-components'
-import logo from '../assets/logo.svg'
 import { FaAlignLeft, FaUserCircle, FaCaretDown } from 'react-icons/fa'
+import { useAppContext } from '../context/appContext'
+import Logo from './Logo'
 const Navbar = () => {
   const { user, logoutUser, toggleSidebar } = useAppContext()
   const [showLogout, setShowLogout] = useState(false)
@@ -14,7 +14,7 @@ const Navbar = () => {
           <FaAlignLeft />
         </button>
         <div>
-          <img src={logo} alt='jobify' className='logo' />
+          <Logo />
           <h3 className='logo-text'>dashboard</h3>
         </div>
         {user && (
@@ -37,7 +37,7 @@ const Navbar = () => {
 }
 
 const Wrapper = styled.nav`
-  height: 6rem;
+  height: var(--nav-height);
   display: flex;
   align-items: center;
   justify-content: center;

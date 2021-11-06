@@ -1,8 +1,8 @@
 import styled from 'styled-components'
 import { useAppContext } from '../context/appContext'
-import logo from '../assets/logo.svg'
 import { NavLink } from 'react-router-dom'
 import links from '../utils/links'
+import Logo from '../components/Logo'
 
 const BigSidebar = () => {
   const { showSidebar } = useAppContext()
@@ -15,7 +15,7 @@ const BigSidebar = () => {
       >
         <div className='content'>
           <header>
-            <img src={logo} alt='jobify' />
+            <Logo />
           </header>
           <div className='nav-links'>
             {links.map((link) => {
