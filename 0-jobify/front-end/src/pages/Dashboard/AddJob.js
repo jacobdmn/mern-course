@@ -1,6 +1,6 @@
-import { FormRow, FormRowSelect, Alert } from '../components'
-import { useAppContext } from '../context/appContext'
-import * as S from '../assets/css/styles'
+import { FormRow, FormRowSelect, Alert } from '../../components'
+import { useAppContext } from '../../context/appContext'
+import * as S from '../../assets/css/styles'
 const AddJob = () => {
   const {
     showAlert,

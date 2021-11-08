@@ -1,7 +1,7 @@
 import { useState } from 'react'
-import { FormRow, Alert } from '../components'
-import { useAppContext } from '../context/appContext'
-import * as S from '../assets/css/styles'
+import { FormRow, Alert } from '../../components'
+import { useAppContext } from '../../context/appContext'
+import * as S from '../../assets/css/styles'
 const Profile = () => {
   const { user, showAlert, displayAlert, updateUser, isLoading } =
     useAppContext()

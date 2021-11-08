@@ -22,7 +22,13 @@ const BigSidebar = () => {
               const { text, path, id, icon } = link
 
               return (
-                <NavLink to={path} className='nav-link' key={id}>
+                <NavLink
+                  to={path}
+                  className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'
+                  }
+                  key={id}
+                >
                   <span className='icon'>{icon}</span>
                   {text}
                 </NavLink>

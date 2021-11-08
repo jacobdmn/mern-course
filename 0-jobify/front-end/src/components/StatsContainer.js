@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 import { useAppContext } from '../context/appContext'
-import ComplexStatItem from './ComplexStatItem'
+import StatItem from './StatItem'
 import { FaSuitcaseRolling, FaCalendarCheck, FaBug } from 'react-icons/fa'
 
 const StatsContainer = () => {
@@ -32,7 +32,7 @@ const StatsContainer = () => {
   return (
     <Wrapper>
       {defaultStats.map((item, index) => {
-        return <ComplexStatItem key={index} {...item} />
+        return <StatItem key={index} {...item} />
       })}
     </Wrapper>
   )

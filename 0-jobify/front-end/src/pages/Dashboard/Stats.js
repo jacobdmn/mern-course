@@ -1,7 +1,7 @@
 import { useEffect } from 'react'
 import styled from 'styled-components'
-import { useAppContext } from '../context/appContext'
-import { StatsContainer, Alert, Loading } from '../components'
+import { useAppContext } from '../../context/appContext'
+import { StatsContainer, Alert, Loading, Chart } from '../../components'
 const Stats = () => {
   const { showStats, isLoading, showAlert } = useAppContext()
   useEffect(() => {
@@ -15,16 +15,21 @@ const Stats = () => {
     )
   }
   if (showAlert) {
-    return <Alert />
+    return (
+      <Wrapper>
+        <Alert />
+      </Wrapper>
+    )
   }
   return (
     <Wrapper>
       <StatsContainer />
+      <Chart />
     </Wrapper>
   )
 }
 
-const Wrapper = styled.section`
+const Wrapper = styled.div`
   .content-loading {
     display: flex;
     justify-content: center;

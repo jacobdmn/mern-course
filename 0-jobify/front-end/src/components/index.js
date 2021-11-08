@@ -7,6 +7,7 @@ import StatsContainer from './StatsContainer'
 import Alert from './Alert'
 import Logo from './Logo'
 import Loading from './Loading'
+import Chart from './Chart'
 export {
   FormRow,
   Navbar,
@@ -17,4 +18,5 @@ export {
   Alert,
   Logo,
   Loading,
+  Chart,
 }

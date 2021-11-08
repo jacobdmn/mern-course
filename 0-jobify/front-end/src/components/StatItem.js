@@ -31,6 +31,7 @@ const Wrapper = styled.article`
     text-transform: capitalize;
     letter-spacing: var(--letterSpacing);
     text-align: left;
+    margin-top: 0.5rem;
   }
   .icon {
     width: 70px;

@@ -27,7 +27,9 @@ export const SmallSidebar = () => {
               return (
                 <NavLink
                   to={path}
-                  className='nav-link'
+                  className={({ isActive }) =>
+                    isActive ? 'nav-link active' : 'nav-link'
+                  }
                   key={id}
                   onClick={() => toggleSidebar()}
                 >

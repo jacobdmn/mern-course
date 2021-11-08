@@ -28,8 +28,6 @@ function Register() {
     e.preventDefault()
     const { name, email, password, isMember } = values
     if (!email || !password || (!isMember && !name)) {
-      // remember to pass as an object
-      // showAlert({ alertText: 'something went wrong', alertType: 'success' })
       displayAlert()
       return
     }
@@ -45,7 +43,7 @@ function Register() {
   useEffect(() => {
     if (user) {
       setTimeout(() => {
-        navigate('/dashboard/stats')
+        navigate('/')
       }, 3000)
     }
   }, [user, navigate])

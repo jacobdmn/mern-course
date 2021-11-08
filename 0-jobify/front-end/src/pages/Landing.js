@@ -8,7 +8,7 @@ function Home() {
   const { user } = useAppContext()
   return (
     <>
-      {user && <Navigate to='/dashboard/stats' />}
+      {user && <Navigate to='/' />}
       <Wrapper>
         <nav>
           <Logo />

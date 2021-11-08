@@ -161,6 +161,7 @@ const reducer = (state, action) => {
       ...state,
       isLoading: false,
       stats: action.payload.stats,
+      monthlyApplications: action.payload.monthlyApplications,
     }
   }
   if (action.type === SHOW_STATS_ERROR) {

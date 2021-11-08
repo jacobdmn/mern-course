@@ -46,6 +46,7 @@ const initialState = {
   status: 'pending',
   statusOptions: ['pending', 'interview', 'declined'],
   stats: {},
+  monthlyApplications: [],
 }
 const AppContext = React.createContext()
 const AppProvider = ({ children }) => {
@@ -189,7 +190,10 @@ const AppProvider = ({ children }) => {
       const { data } = await authFetch('/jobs/stats')
       dispatch({
         type: SHOW_STATS_SUCCESS,
-        payload: { stats: data.defaultStats },
+        payload: {
+          stats: data.defaultStats,
+          monthlyApplications: data.monthlyApplications,
+        },
       })
     } catch (error) {
       dispatch({
@@ -197,6 +201,7 @@ const AppProvider = ({ children }) => {
         payload: { msg: error.response.data.msg },
       })
     }
+    clearAlert()
   }
 
   const updateUser = async ({ name, email }) => {
